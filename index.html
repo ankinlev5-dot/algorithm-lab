@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charchest="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="menu">
+        <div class="account">
+            <button class="profilebtn">Мой профиль</button>
+    </div>
+    <h1>AlgoritmLab</h1>
+</div>
+<div class="app-layout">
+    <aside class="sidebar">
+        <h2>Выберите алгоритм:</h2>
+        <div class="button-group">
+            <button class="button1">№1</button>
+            <button class="button2">№2</button>
+        </div>
+    </aside>
+    <main class="main-content">
+            <div class="custom-input-group">
+                <input type="text" id="custom-array" placeholder="Введите числа: 10, 50, 20...">
+                <button id="apply-array">Применить</button>
+            </div>
+            <canvas id="sortCanvas" width="600" height="300" style ="background-Color: white; border: 1px solid #ccc;"></canvas>
+            <p id="step-text">
+                Нажмите «Старт», чтобы начать
+            </p>
+            <div id="trainer-box" style="display: none; background: white; padding: 20px; border-radius: 10px; border: 2px solid rgb(99, 194, 130); margin: 10px 0; width: 600px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 id="question-text" style="margin-bottom: 15px; color: #2c3e50;">Вопрос</h3>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                    <button id="btn-swap" style="background: #e74c3c; color: white;">Поменять местами</button>
+                    <button id="btn-keep" style="background: #3498db; color: white;">Оставить как есть</button>
+                </div>
+                <div id="trainer-theory" style="display: none; background: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; border-left: 5px solid #ffeeba; text-align: left;">
+                    <p id="theory-text"></p>
+                </div>
+            </div>
+            <div class="button-group2">
+                <button id="soda1">Старт</button>
+                <button id="pau">Пауза</button>
+                <button id="res">Сброс</button>
+                <label style="display: flex; align-items: center; gap: 5px; font-weight: bold; cursor: pointer;">
+                    <input type="checkbox" id="trainer-toggle"> Режим тренажера
+                </label>
+                <div class="speed-control">
+                    <label for="speedSlider">Скорость:</label>
+                    <input type="range" id="speedSlider" min="50" max="1000" value="500">
+                </div>
+            </div>
+            <p id="status">Статус: Ожидание</p>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

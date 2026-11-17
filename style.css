@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: paleturquoise;
+    color: rgb(27, 124, 108);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+h1 {
+    color: rgba(58, 211, 178, 0.897);
+    font-size: 36px;
+}
+.account button {
+    padding: 12px 24px;
+    font-size: 16px;
+}
+.app-layout {
+    display: flex;
+    flex: 1;
+    gap: 40px;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: flex-start;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 250px;
+}
+.sidebar h2 {
+    font-size: 22px;
+}
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+.custom-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+#custom-array {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid rgb(99, 194, 130);
+    border-radius: 8px;
+    outline: none;
+    width: 300px;
+}
+#custom-array:focus {
+    border-color: rgb(120, 221, 151);
+}
+#step-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    height: 30px;
+    margin: 15px 0;
+}
+.button-group2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#status {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+button {
+    background-color: rgb(99, 194, 130);
+    color: rgb(5, 5, 5);
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+button:hover {
+    background-color: rgb(120, 221, 151);
+}
