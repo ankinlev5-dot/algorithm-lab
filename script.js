@@ -2,9 +2,22 @@ const profileBtn=document.querySelector(".profilebtn");
 profileBtn.addEventListener("click",function() {
     alert("Привет! Это твой профиль.");
 });
-const firstscript = document.querySelector(".button1");
-firstscript.addEventListener("click", function() {
-    alert("Выбрана сортировка №1");
+let currentAlgorithm = "bubble";
+const btnBubble = document.querySelector("#btn-bubble");
+const btnSelection = document.querySelector("#btn-selection");
+btnBubble.addEventListener("click", function() {
+    currentAlgorithm = "bubble";
+    btnBubble.classList.add("active");
+    btnSelection.classList.remove("active");
+    restBtn.click();
+    statusBtn.textContent = "Выбрана: Пузырьковая сортировка";
+});
+btnSelection.addEventListener("click", function() {
+    currentAlgorithm = "selection";
+    btnSelection.classList.add("active");
+    btnBubble.classList.remove("active");
+    restBtn.click();
+    statusBtn.textContent = "Выбрана: Сортировка выбором";
 });
 let isPaused = false;
 let isSorting = false;
@@ -46,9 +59,13 @@ startBtn.addEventListener("click", function () {
     pauseBtn.style.color="";
     startBtn.disabled=true;
     pauseBtn.disabled=false;
-     if (!isSorting) {
+    if (!isSorting) {
         isPaused = false;
-        bubbleSort();
+        if (currentAlgorithm === "bubble") {
+            bubbleSort();
+        } else if (currentAlgorithm === "selection") {
+            selectionSort();
+        }
     } else {
         isPaused = false;
     }
@@ -178,6 +195,79 @@ async function bubbleSort() {
     }
     stepText.textContent = `Элемент ${numbers[numbers.length - 1 - i]} встал на своё место!`;
     await sleep(delay);
+    isSorting = false;
+    statusBtn.textContent = "Статус: Сортировка завершена";
+    stepText.textContent = "Массив полностью отсортирован!";
+    drawBars(-1, -1, 0);
+}
+async function selectionSort() {
+    currentRunId++;
+    const myRunId = currentRunId;
+    isSorting = true;
+    const speedSlider = document.querySelector("#speedSlider");
+    let delay = 1050 - parseInt(speedSlider.value);
+    for (let i = 0; i < numbers.length - 1; i++) {
+        let minIndex = i;
+        const sortedBoundary = i;
+        for (let j = i + 1; j < numbers.length; j++) {
+            while (isPaused) {
+                await sleep(100);
+                if (myRunId !== currentRunId) return;
+            }
+            if (myRunId !== currentRunId) return;
+            stepText.textContent = `Ищем минимум. Сравниваем текущий минимум ${numbers[minIndex]} и ${numbers[j]}...`;
+            drawBars(minIndex, j, sortedBoundary);          
+            if (isTrainerMode) {
+                trainerBox.style.display = "block";
+                trainerTheory.style.display = "none";
+                questionText.textContent = `Число ${numbers[j]} меньше, чем текущий минимум ${numbers[minIndex]}?`;               
+                const userAnswer = await waitForAnswer();
+                const actuallySmaller = numbers[j] < numbers[minIndex];
+                const correctAnswer = actuallySmaller ? "swap" : "keep";
+                if (userAnswer !== correctAnswer) {
+                    trainerTheory.style.display = "block";
+                    trainerTheory.style.background = "#fff3cd"; 
+                    trainerTheory.style.color = "#856404";
+                    if (actuallySmaller) {
+                        theoryText.innerHTML = `<strong>Ошибка!</strong> ${numbers[j]} <strong>меньше</strong> ${numbers[minIndex]}. Значит, теперь ${numbers[j]} — новый минимум!`;
+                    } else {
+                        theoryText.innerHTML = `<strong>Ошибка!</strong> ${numbers[j]} <strong>больше или равно</strong> ${numbers[minIndex]}. Минимум остается прежним.`;
+                    }
+                    await sleep(4000);
+                    trainerTheory.style.display = "none";
+                } else {
+                    trainerTheory.style.display = "block";
+                    trainerTheory.style.background = "#d4edda"; 
+                    trainerTheory.style.color = "#155724";
+                    theoryText.innerHTML = `<strong>Верно!</strong> Вы правильно определили, что делать с числом ${numbers[j]}.`;
+                    await sleep(1500);
+                    trainerTheory.style.display = "none";
+                    trainerTheory.style.background = "#fff3cd"; 
+                    trainerTheory.style.color = "#856404";
+                }
+                trainerBox.style.display = "none";
+                if (myRunId !== currentRunId) return;
+            } else {
+                delay = 1050 - parseInt(speedSlider.value);
+                await sleep(delay);
+                if (myRunId !== currentRunId) return;
+            }
+            if (numbers[j] < numbers[minIndex]) {
+                minIndex = j;
+                stepText.textContent = `${numbers[j]} меньше! Запоминаем его как новый минимум.`;
+                drawBars(minIndex, j, sortedBoundary);
+                await sleep(delay);
+                if (myRunId !== currentRunId) return;
+            }
+        }
+        if (minIndex !== i) {
+            stepText.textContent = `Нашли минимум: ${numbers[minIndex]}. Меняем его местами с ${numbers[i]}.`;
+            [numbers[i], numbers[minIndex]] = [numbers[minIndex], numbers[i]];
+            drawBars(i, minIndex, sortedBoundary + 1);
+            await sleep(delay);
+            if (myRunId !== currentRunId) return;
+        }
+    }   
     isSorting = false;
     statusBtn.textContent = "Статус: Сортировка завершена";
     stepText.textContent = "Массив полностью отсортирован!";

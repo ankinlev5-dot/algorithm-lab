@@ -112,3 +112,9 @@ button {
 button:hover {
     background-color: rgb(120, 221, 151);
 }
+.button-group button.active {
+    background-color: #2ecc71;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #27ae60;
+}
